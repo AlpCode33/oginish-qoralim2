@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "ئۆگىنىش قورالىم",
+  "version": "1.0.0",
+  "description": "سوئال-جاۋاب JSON ھۆججىتى ئارقىلىق بىلىم ئۆگىنىش، مۇھىم سۆزلۈكلەرنى رەتلەش ۋە تور كۆرگۈچ ئېچىلغاندا ئەسكەرتىش قىستۇرمىسى. %100 يەرلىك، نۆل ئىز قوغلاش.",
+  "permissions": [
+    "storage",
+    "notifications",
+    "alarms"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ئۆگىنىش قورالىم"
+  },
+  "background": {
+    "service_worker": "popup.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'none';"
+  }
+}

@@ -1,0 +1,1159 @@
+<!DOCTYPE html>
+<html lang="ug" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ئۆگىنىش قورالىم</title>
+  <style>
+    :root {
+      /* رەڭ تاختىسى — design/style.md */
+      --color-primary: #1E5FE3;
+      --color-primary-light: #2A85FC;
+      --color-primary-dark: #1A4FD9;
+      --color-link: #0B3FC9;
+      --color-secondary: #B5CDFD;
+      --color-secondary-soft: #D6E2F8;
+      --color-glow: #7E9EF5;
+
+      --color-bg: #E3EAFA;
+      --color-bg-top: #E8EEFB;
+      --color-bg-bottom: #DBE4F6;
+      --color-surface: #DCE4F6;
+      --color-highlight: #F2F6FD;
+      --color-shadow: #B3C1DA;
+      --color-divider: #9FB3E0;
+
+      --color-text-strong: #05092C;
+      --color-text: #0F1D3C;
+      --color-text-muted: #444E67;
+      --color-text-placeholder: #58637F;
+      --color-icon: #707C9C;
+      --color-on-primary: #FFFFFF;
+
+      --color-error: #C81E3A;
+      --color-error-bg: #FBE4E8;
+      --color-success: #0A7346;
+      --color-success-bg: #DDF3E9;
+
+      /* خەت ئۆلچىمى */
+      --font-family: "UKIJ Tuz", "ALKATIP Tor", "Noto Sans Arabic", "Geeza Pro", "Tahoma", sans-serif;
+      --text-display: 700 26px/1.5 var(--font-family);
+      --text-title: 700 20px/1.6 var(--font-family);
+      --text-button: 700 18px/1.4 var(--font-family);
+      --text-body: 400 16px/1.8 var(--font-family);
+      --text-link: 700 15px/1.7 var(--font-family);
+      --text-small: 400 14px/1.7 var(--font-family);
+      --text-caption: 400 13px/1.7 var(--font-family);
+
+      /* شەكىل ۋە كۆلەڭگە */
+      --radius-sm: 8px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+      --radius-xl: 40px;
+      --radius-pill: 999px;
+
+      --shadow-raised: -6px -6px 14px rgba(255, 255, 255, 0.85), 6px 8px 18px rgba(148, 163, 198, 0.45);
+      --shadow-soft: -2px -2px 6px rgba(255, 255, 255, 0.8), 3px 4px 10px rgba(148, 163, 198, 0.30);
+      --shadow-pressed: inset 3px 3px 7px rgba(148, 163, 198, 0.45), inset -3px -3px 7px rgba(255, 255, 255, 0.8);
+      --shadow-glow: 0 10px 24px rgba(30, 95, 227, 0.35);
+      --shadow-focus: 0 0 0 3px rgba(30, 95, 227, 0.28);
+      --border-highlight: 1px solid rgba(255, 255, 255, 0.65);
+
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-6: 24px;
+      --control-height: 52px;
+
+      /* ھەرىكەت */
+      --duration-fast: 120ms;
+      --duration-base: 200ms;
+      --duration-slow: 320ms;
+      --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+      --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      letter-spacing: 0;
+    }
+
+    html {
+      direction: rtl;
+      width: 420px;
+      min-height: 580px;
+      max-height: 600px;
+    }
+
+    body {
+      margin: 0;
+      width: 420px;
+      min-height: 580px;
+      font: var(--text-body);
+      color: var(--color-text);
+      background: linear-gradient(180deg, var(--color-bg-top), var(--color-bg-bottom)) fixed;
+      position: relative;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    /* تەگلىك يۇمشاق بېزەك چەمبەرلىرى */
+    .bg-orb {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      background: radial-gradient(circle, var(--color-secondary) 0%, var(--color-secondary-soft) 65%, transparent 100%);
+      opacity: 0.45;
+    }
+
+    .bg-orb-top {
+      width: 220px;
+      height: 220px;
+      top: -90px;
+      inset-inline-start: -80px;
+    }
+
+    .bg-orb-bottom {
+      width: 240px;
+      height: 240px;
+      bottom: -100px;
+      inset-inline-end: -90px;
+    }
+
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      max-width: 420px;
+      margin: 0 auto;
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+      min-height: 580px;
+    }
+
+    /* ئۈستى قورال ئىسمى كارتىسى */
+    .top-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 56px;
+      padding: var(--space-2) var(--space-4);
+      border-radius: var(--radius-lg);
+      border: var(--border-highlight);
+      background: var(--color-bg);
+      box-shadow: var(--shadow-raised);
+    }
+
+    .header-title {
+      margin: 0;
+      font: var(--text-title);
+      color: var(--color-text-strong);
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 280px;
+    }
+
+    .btn-back {
+      position: absolute;
+      inset-inline-start: var(--space-2);
+      height: 40px;
+      padding: 0 var(--space-3);
+      border: var(--border-highlight);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-soft);
+      color: var(--color-link);
+      font: var(--text-link);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-1);
+      transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+    }
+
+    .btn-back:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-back:active {
+      transform: scale(0.98);
+      box-shadow: var(--shadow-pressed);
+    }
+
+    .btn-back:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-focus);
+    }
+
+    /* كۆرۈنۈش بۆلەكلىرى */
+    .view {
+      display: none;
+      flex-direction: column;
+      gap: var(--space-4);
+      flex: 1;
+      animation: enter var(--duration-slow) var(--ease-out) both;
+    }
+
+    .view.active {
+      display: flex;
+    }
+
+    /* كارتا ۋە ئويۇق يۈز */
+    .card {
+      padding: var(--space-4);
+      border: var(--border-highlight);
+      border-radius: var(--radius-lg);
+      background: var(--color-bg);
+      box-shadow: var(--shadow-raised);
+    }
+
+    .well {
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-pressed);
+      border: 1px solid rgba(255, 255, 255, 0.45);
+    }
+
+    /* تور كۆرگۈچ ئېچىلغاندا ئەسكەرتمە تاختىسى */
+    .startup-banner {
+      display: none;
+      flex-direction: column;
+      gap: var(--space-2);
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-pressed);
+      border: 1px solid rgba(30, 95, 227, 0.25);
+    }
+
+    .startup-banner.visible {
+      display: flex;
+      animation: enter var(--duration-slow) var(--ease-out) both;
+    }
+
+    .startup-banner-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2);
+      font: var(--text-small);
+      font-weight: 700;
+      color: var(--color-link);
+    }
+
+    .startup-question {
+      margin: 0;
+      font: var(--text-body);
+      font-weight: 700;
+      color: var(--color-text-strong);
+    }
+
+    .startup-answer {
+      margin: 0;
+      font: var(--text-small);
+      color: var(--color-text);
+      padding-top: var(--space-2);
+      border-top: 1px solid var(--color-divider);
+      display: none;
+    }
+
+    .startup-answer.visible {
+      display: block;
+    }
+
+    .startup-actions {
+      display: flex;
+      gap: var(--space-2);
+      margin-top: var(--space-1);
+    }
+
+    /* كىتابلار تىزىملىكى */
+    .books-card {
+      min-height: 184px;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .books-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: var(--space-2);
+      border-bottom: 1px solid rgba(159, 179, 224, 0.45);
+      font: var(--text-small);
+      color: var(--color-text-muted);
+    }
+
+    .book-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .book-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-soft);
+      border: var(--border-highlight);
+      transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+    }
+
+    .book-row:hover {
+      transform: translateY(-1px);
+    }
+
+    .book-open-btn {
+      flex: 1;
+      min-width: 0;
+      background: transparent;
+      border: 0;
+      padding: var(--space-1) 0;
+      text-align: start;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      color: var(--color-text-strong);
+      font: var(--text-body);
+    }
+
+    .book-open-btn:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-focus);
+      border-radius: var(--radius-sm);
+    }
+
+    .book-name-line {
+      font-weight: 700;
+      color: var(--color-text-strong);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .book-meta-line {
+      font: var(--text-caption);
+      color: var(--color-text-muted);
+    }
+
+    /* نېئومورفىزم تاللاش رامكىسى (ئەسكەرتمە) */
+    .reminder-toggle {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      cursor: pointer;
+      flex-shrink: 0;
+      font: var(--text-small);
+      color: var(--color-text-muted);
+      user-select: none;
+      padding: var(--space-1);
+    }
+
+    .reminder-toggle input {
+      position: absolute;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+      margin: 0;
+    }
+
+    .check-box {
+      width: 22px;
+      height: 22px;
+      border-radius: var(--radius-sm);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-pressed);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+    }
+
+    .check-box svg {
+      width: 14px;
+      height: 14px;
+      stroke: var(--color-on-primary);
+      stroke-width: 3;
+      fill: none;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+    }
+
+    .reminder-toggle input:checked + .check-box {
+      background: var(--color-primary);
+      box-shadow: 0 4px 10px rgba(30, 95, 227, 0.35);
+      border-color: var(--color-primary);
+    }
+
+    .reminder-toggle input:checked + .check-box svg {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .reminder-toggle input:focus-visible + .check-box {
+      box-shadow: var(--shadow-focus);
+    }
+
+    /* بوش ھالەت */
+    .empty-state {
+      text-align: center;
+      padding: var(--space-6) var(--space-4);
+      color: var(--color-text-muted);
+      font: var(--text-small);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-pressed);
+    }
+
+    .empty-state strong {
+      display: block;
+      font: var(--text-body);
+      font-weight: 700;
+      color: var(--color-text-strong);
+      margin-bottom: var(--space-1);
+    }
+
+    /* قاتار يۆنىلىش كۇنۇپكىلىرى (مۇھىم سۆزلۈكلەر / مۇھىم ئەسكەرتىش) */
+    .nav-bar-btn {
+      width: 100%;
+      min-height: var(--control-height);
+      padding: var(--space-2) var(--space-4);
+      border: var(--border-highlight);
+      border-radius: var(--radius-md);
+      background: var(--color-bg);
+      box-shadow: var(--shadow-raised);
+      color: var(--color-text-strong);
+      font: var(--text-body);
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+      transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+    }
+
+    .nav-bar-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .nav-bar-btn:active {
+      transform: scale(0.98);
+      box-shadow: var(--shadow-pressed);
+    }
+
+    .nav-bar-btn:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-raised), var(--shadow-focus);
+    }
+
+    .nav-bar-meta {
+      font: var(--text-small);
+      font-weight: 400;
+      color: var(--color-text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    /* ئوتتۇرىدىكى كىتاب قوشۇش كۇنۇپكىسى */
+    .center-action-wrap {
+      display: flex;
+      justify-content: center;
+      padding: var(--space-1) 0;
+    }
+
+    .btn-secondary {
+      min-height: 46px;
+      padding: 0 var(--space-6);
+      border: var(--border-highlight);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-raised);
+      color: var(--color-link);
+      font: var(--text-link);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      white-space: nowrap;
+      transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary:active {
+      transform: scale(0.98);
+      box-shadow: var(--shadow-pressed);
+    }
+
+    .btn-secondary:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-raised), var(--shadow-focus);
+    }
+
+    .btn-secondary.btn-compact {
+      min-height: 40px;
+      padding: 0 var(--space-3);
+      font: var(--text-small);
+      font-weight: 700;
+    }
+
+    .btn-danger {
+      color: var(--color-error);
+    }
+
+    /* ئاساسىي توق كۆك كۇنۇپكا (بىر ئېكراندا پەقەت بىرلا) */
+    .btn-primary {
+      position: relative;
+      width: 100%;
+      height: var(--control-height);
+      padding-inline: var(--space-6);
+      border: 0;
+      border-radius: var(--radius-pill);
+      font: var(--text-button);
+      color: var(--color-on-primary);
+      background: linear-gradient(to left, var(--color-primary-light), var(--color-primary) 45%, var(--color-primary-dark));
+      box-shadow: var(--shadow-glow), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-3);
+      white-space: nowrap;
+      transition: transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 30px rgba(30, 95, 227, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-primary:active {
+      transform: scale(0.98);
+      background: var(--color-primary-dark);
+      box-shadow: 0 4px 10px rgba(30, 95, 227, 0.30);
+    }
+
+    .btn-primary:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-glow), var(--shadow-focus);
+    }
+
+    .btn-primary:disabled {
+      background: var(--color-secondary);
+      color: var(--color-text-muted);
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    .btn-primary-arrow {
+      position: absolute;
+      inset-inline-end: 10px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.18);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      line-height: 1;
+    }
+
+    /* كىرگۈزۈش رامكىلىرى */
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .field-label {
+      font: var(--text-small);
+      font-weight: 700;
+      color: var(--color-text-strong);
+    }
+
+    .input, .select, .textarea {
+      width: 100%;
+      border: var(--border-highlight);
+      border-radius: var(--radius-md);
+      font: var(--text-body);
+      color: var(--color-text);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-soft);
+      transition: border-color var(--duration-base) var(--ease-out), box-shadow var(--duration-base) var(--ease-out);
+    }
+
+    .input, .select {
+      height: var(--control-height);
+      padding: 0 var(--space-4);
+    }
+
+    .textarea {
+      min-height: 132px;
+      padding: var(--space-3) var(--space-4);
+      resize: vertical;
+      font-size: 14px;
+      line-height: 1.6;
+      unicode-bidi: plaintext;
+    }
+
+    .input::placeholder, .textarea::placeholder {
+      color: var(--color-text-placeholder);
+    }
+
+    .input:focus, .select:focus, .textarea:focus {
+      outline: none;
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-soft), var(--shadow-focus);
+    }
+
+    .input[aria-invalid="true"], .textarea[aria-invalid="true"] {
+      border-color: var(--color-error);
+    }
+
+    .shake {
+      animation: shake 200ms var(--ease-out);
+    }
+
+    /* ھالەت ئۇچۇرلىرى */
+    .msg-box {
+      display: none;
+      align-items: flex-start;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      font: var(--text-small);
+      font-weight: 700;
+    }
+
+    .msg-box.visible {
+      display: flex;
+    }
+
+    .msg-error {
+      background: var(--color-error-bg);
+      color: var(--color-error);
+      border: 1px solid rgba(200, 30, 58, 0.25);
+    }
+
+    .msg-success {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+      border: 1px solid rgba(10, 115, 70, 0.25);
+    }
+
+    /* سۈزگۈچ بۆلەكلىرى */
+    .segmented {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-2);
+      padding: var(--space-1);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-pressed);
+    }
+
+    .seg-btn {
+      height: 38px;
+      border: 0;
+      border-radius: 12px;
+      background: transparent;
+      color: var(--color-text-muted);
+      font: var(--text-small);
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out);
+    }
+
+    .seg-btn.active {
+      background: var(--color-bg);
+      color: var(--color-link);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .seg-btn:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-focus);
+    }
+
+    /* سوئال-جاۋاب ئۆگىنىش كارتىسى */
+    .qa-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font: var(--text-caption);
+      color: var(--color-text-muted);
+      margin-bottom: var(--space-2);
+    }
+
+    .qa-question-text {
+      margin: 0 0 var(--space-4) 0;
+      font: var(--text-title);
+      color: var(--color-text-strong);
+      unicode-bidi: plaintext;
+    }
+
+    .qa-answer-box {
+      display: none;
+      margin-top: var(--space-3);
+      padding: var(--space-4);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-pressed);
+      color: var(--color-text);
+      font: var(--text-body);
+      white-space: pre-wrap;
+      unicode-bidi: plaintext;
+    }
+
+    .qa-answer-box.visible {
+      display: block;
+      animation: enter var(--duration-base) var(--ease-out) both;
+    }
+
+    .qa-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-3);
+      margin-top: var(--space-3);
+    }
+
+    .qa-nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+    }
+
+    .qa-footer-tools {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-2);
+      padding-top: var(--space-2);
+      border-top: 1px solid rgba(159, 179, 224, 0.45);
+    }
+
+    /* سۆزلۈك ۋە ئەسكەرتىش تىزىملىكلىرى */
+    .item-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+    }
+
+    .list-item-well {
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-soft);
+      border: var(--border-highlight);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-1);
+    }
+
+    .item-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--space-2);
+    }
+
+    .item-title {
+      font-weight: 700;
+      color: var(--color-text-strong);
+      font: var(--text-body);
+    }
+
+    .item-sub {
+      font: var(--text-caption);
+      color: var(--color-text-muted);
+    }
+
+    .item-body {
+      margin: 0;
+      font: var(--text-small);
+      color: var(--color-text);
+    }
+
+    /* ھۆججەت يۈكلەش كۇنۇپكىسى */
+    .file-drop-label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      min-height: var(--control-height);
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      border: 1.5px dashed var(--color-divider);
+      background: var(--color-surface);
+      box-shadow: var(--shadow-soft);
+      color: var(--color-link);
+      font: var(--text-link);
+      cursor: pointer;
+      transition: border-color var(--duration-base) var(--ease-out), transform var(--duration-fast) var(--ease-out);
+    }
+
+    .file-drop-label:hover {
+      border-color: var(--color-primary);
+      transform: translateY(-1px);
+    }
+
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0 0 0 0);
+      white-space: nowrap;
+    }
+
+    /* ئاستى قىسقا ئۇچۇر (Toast) */
+    .toast {
+      position: fixed;
+      bottom: var(--space-4);
+      inset-inline: var(--space-4);
+      z-index: 30;
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      font: var(--text-small);
+      font-weight: 700;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(10px);
+      pointer-events: none;
+      transition: opacity var(--duration-base) var(--ease-out), transform var(--duration-base) var(--ease-out);
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toast.success {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+      border: 1px solid rgba(10, 115, 70, 0.35);
+      box-shadow: var(--shadow-raised);
+    }
+
+    .toast.error {
+      background: var(--color-error-bg);
+      color: var(--color-error);
+      border: 1px solid rgba(200, 30, 58, 0.35);
+      box-shadow: var(--shadow-raised);
+    }
+
+    .divider {
+      height: 1px;
+      background: rgba(159, 179, 224, 0.5);
+      margin: var(--space-1) 0;
+    }
+
+    .row-between {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-3);
+    }
+
+    .spacer {
+      flex: 1;
+    }
+
+    @keyframes enter {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      50% { transform: translateX(4px); }
+      75% { transform: translateX(-4px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 120ms !important;
+        transition-duration: 120ms !important;
+      }
+      .btn-primary:hover, .btn-primary:active, .btn-secondary:hover, .nav-bar-btn:hover {
+        transform: none;
+      }
+      @keyframes enter {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-orb bg-orb-top" aria-hidden="true"></div>
+  <div class="bg-orb bg-orb-bottom" aria-hidden="true"></div>
+
+  <main class="app-shell">
+    <!-- ئۈستى ماۋزۇ كارتىسى -->
+    <header class="top-header">
+      <button type="button" id="btnBack" class="btn-back" hidden aria-label="باش بەتكە قايتىش">
+        <span aria-hidden="true">→</span>
+        <span>قايتىش</span>
+      </button>
+      <h1 id="headerTitle" class="header-title">ئۆگىنىش قورالىم</h1>
+    </header>
+
+    <!-- 1. باش بەت كۆرۈنۈشى -->
+    <section id="viewHome" class="view active" aria-label="باش بەت">
+      <!-- تور كۆرگۈچ ئېچىلغاندا چىققان ئەسكەرتمە -->
+      <div id="startupBanner" class="startup-banner" role="region" aria-label="تور كۆرگۈچ ئەسكەرتمىسى">
+        <div class="startup-banner-head">
+          <span id="startupBookTitle">كۈندىلىك ئەسكەرتمە</span>
+          <span id="startupTag">تەكرارلاش ۋاقتى</span>
+        </div>
+        <p id="startupQuestion" class="startup-question"></p>
+        <p id="startupAnswer" class="startup-answer"></p>
+        <div class="startup-actions">
+          <button type="button" id="btnStartupReveal" class="btn-secondary btn-compact" style="flex:1;">جاۋابنى كۆرۈش</button>
+          <button type="button" id="btnStartupDismiss" class="btn-secondary btn-compact" style="flex:1;">چۈشەندىم ✓</button>
+        </div>
+      </div>
+
+      <!-- كىتابلار تىزىملىكى كارتىسى -->
+      <div class="card books-card">
+        <div class="books-card-header">
+          <span>ساقلانغان كىتابلار</span>
+          <span>ئەسكەرتمە</span>
+        </div>
+        <ul id="bookList" class="book-list"></ul>
+        <div id="booksEmpty" class="empty-state" hidden>
+          <strong>تېخى كىتاب قوشۇلمىدى</strong>
+          ئاستىدىكى «جىسون ئۈچۈن پرومپىت كۆچۈرۈش» كۇنۇپكىسى بىلەن سوئال-جاۋاب تەييارلاپ، «كىتاب قوشۇش» ئارقىلىق يۈكلەڭ.
+        </div>
+      </div>
+
+      <!-- مۇھىم سۆزلۈكلەر -->
+      <button type="button" id="btnOpenVocab" class="nav-bar-btn">
+        <span>مۇھىم سۆزلۈكلەر</span>
+        <span class="nav-bar-meta">
+          <bdi id="vocabCountMeta">0</bdi>
+          <span aria-hidden="true">←</span>
+        </span>
+      </button>
+
+      <!-- مۇھىم ئەسكەرتىش -->
+      <button type="button" id="btnOpenReminders" class="nav-bar-btn">
+        <span>مۇھىم ئەسكەرتىش</span>
+        <span class="nav-bar-meta">
+          <span id="reminderStatusMeta">ئوچۇق</span>
+          <span aria-hidden="true">←</span>
+        </span>
+      </button>
+
+      <!-- كىتاب قوشۇش -->
+      <div class="center-action-wrap">
+        <button type="button" id="btnOpenAdd" class="btn-secondary">
+          <span aria-hidden="true">+</span>
+          <span>كىتاب قوشۇش</span>
+        </button>
+      </div>
+
+      <div class="spacer"></div>
+
+      <!-- ئاساسىي ھەرىكەت: جىسون ئۈچۈن پرومپىت كۆچۈرۈش -->
+      <button type="button" id="btnCopyPrompt" class="btn-primary">
+        <span>جىسون ئۈچۈن پرومپىت كۆچۈرۈش</span>
+        <span class="btn-primary-arrow" aria-hidden="true">←</span>
+      </button>
+    </section>
+
+    <!-- 2. كىتاب ئۆگىنىش كۆرۈنۈشى -->
+    <section id="viewStudy" class="view" aria-label="سوئال-جاۋاب ئۆگىنىش">
+      <div class="segmented" role="tablist" aria-label="سوئال سۈزگۈچى">
+        <button type="button" class="seg-btn active" data-filter="all" role="tab" aria-selected="true">ھەممىسى</button>
+        <button type="button" class="seg-btn" data-filter="unmastered" role="tab" aria-selected="false">ئۆگىنىلمىگەن</button>
+        <button type="button" class="seg-btn" data-filter="mastered" role="tab" aria-selected="false">ئىگىلىگەن</button>
+      </div>
+
+      <div id="studyCard" class="card">
+        <div class="qa-meta">
+          <span id="studyCounter"><bdi>1 / 30</bdi></span>
+          <span id="studyImportance">مۇھىم</span>
+        </div>
+        <h2 id="studyQuestion" class="qa-question-text"></h2>
+        <button type="button" id="btnToggleAnswer" class="btn-primary">
+          <span id="btnToggleAnswerText">جاۋابنى كۆرۈش</span>
+          <span class="btn-primary-arrow" aria-hidden="true">←</span>
+        </button>
+        <div id="studyAnswerBox" class="qa-answer-box"></div>
+        <div class="qa-actions-grid">
+          <button type="button" id="btnMarkMastered" class="btn-secondary btn-compact">ئۆگەندىم ✓</button>
+          <button type="button" id="btnMarkReview" class="btn-secondary btn-compact">قايتا كۆرىمەن</button>
+        </div>
+      </div>
+
+      <div id="studyEmptyFilter" class="empty-state" hidden>
+        <strong>بۇ تۈردە سوئال يوق</strong>
+        باشقا سۈزگۈچنى تاللاپ ئۆگىنىشنى داۋاملاشتۇرۇڭ.
+      </div>
+
+      <div class="qa-nav-row">
+        <button type="button" id="btnPrevQ" class="btn-secondary btn-compact" style="flex:1;">→ ئالدىنقى سوئال</button>
+        <button type="button" id="btnNextQ" class="btn-secondary btn-compact" style="flex:1;">كېيىنكى سوئال ←</button>
+      </div>
+
+      <div class="qa-footer-tools">
+        <button type="button" id="btnExportBook" class="btn-secondary btn-compact">زاپاس چۈشۈرۈش</button>
+        <button type="button" id="btnDeleteBook" class="btn-secondary btn-compact btn-danger">كىتابنى ئۆچۈرۈش</button>
+      </div>
+    </section>
+
+    <!-- 3. مۇھىم سۆزلۈكلەر كۆرۈنۈشى -->
+    <section id="viewVocab" class="view" aria-label="مۇھىم سۆزلۈكلەر">
+      <div class="field-group">
+        <label for="vocabBookFilter" class="field-label">كىتاب بويىچە تاللاش</label>
+        <select id="vocabBookFilter" class="select"></select>
+      </div>
+      <div class="field-group">
+        <label for="vocabSearch" class="field-label">سۆزلۈك ئىزدەش</label>
+        <input id="vocabSearch" type="search" class="input" placeholder="سۆزلۈك ياكى مەنىسىنى يېزىڭ..." />
+      </div>
+
+      <div id="vocabList" class="item-list"></div>
+      <div id="vocabEmpty" class="empty-state" hidden>
+        <strong>سۆزلۈك تېپىلمىدى</strong>
+        JSON ئىچىدە vocabulary بۆلىكى بولسا ياكى تۆۋەندىن قوشسىڭىز بۇ يەردە كۆرۈنىدۇ.
+      </div>
+
+      <div class="card">
+        <div class="field-group">
+          <label for="newVocabTerm" class="field-label">يېڭى مۇھىم سۆزلۈك قوشۇش</label>
+          <input id="newVocabTerm" type="text" class="input" placeholder="سۆزلۈك ياكى ئاتالغۇ" />
+          <input id="newVocabMeaning" type="text" class="input" placeholder="ئېنىق مەنىسى ۋە چۈشەندۈرۈشى" />
+          <button type="button" id="btnAddVocab" class="btn-primary">
+            <span>سۆزلۈكنى ساقلاش</span>
+            <span class="btn-primary-arrow" aria-hidden="true">←</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. مۇھىم ئەسكەرتىش ۋە تەڭشەكلەر كۆرۈنۈشى -->
+    <section id="viewReminders" class="view" aria-label="مۇھىم ئەسكەرتىش">
+      <div class="card" style="display:flex;flex-direction:column;gap:14px;">
+        <div class="row-between">
+          <div>
+            <div class="field-label">تور كۆرگۈچ ئېچىلغاندا ئەسكەرتىش</div>
+            <div class="item-sub">Chrome ئېچىلغاندا تاللانغان كىتابتىن ئەسكەرتمە چىقىدۇ</div>
+          </div>
+          <label class="reminder-toggle">
+            <input type="checkbox" id="chkGlobalReminder" />
+            <span class="check-box" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </span>
+          </label>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="field-group">
+          <label for="selectInterval" class="field-label">قەرەللىك ئەسكەرتىش ئارىلىقى</label>
+          <select id="selectInterval" class="select">
+            <option value="0">پەقەت تور كۆرگۈچ ئېچىلغاندا</option>
+            <option value="60">ھەر 1 سائەتتە بىر قېتىم</option>
+            <option value="180">ھەر 3 سائەتتە بىر قېتىم</option>
+          </select>
+        </div>
+
+        <button type="button" id="btnTestNotification" class="btn-secondary btn-compact">
+          ئەسكەرتىش ئۇقتۇرۇشىنى سىناپ كۆرۈش
+        </button>
+      </div>
+
+      <div id="remindersList" class="item-list"></div>
+      <div id="remindersEmpty" class="empty-state" hidden>
+        <strong>تېخى مۇھىم ئەسكەرتىش خاتىرىسى يوق</strong>
+        كىتاب JSON ئىچىدىكى ئەسكەرتىشلەر ياكى تۆۋەندىن قوشقان ئەسكەرتىشلىرىڭىز بۇ يەردە كۆرۈنىدۇ.
+      </div>
+
+      <div class="card">
+        <div class="field-group">
+          <label for="newReminderText" class="field-label">يېڭى مۇھىم ئەسكەرتىش قوشۇش</label>
+          <input id="newReminderText" type="text" class="input" placeholder="مۇھىم ئەسكەرتىش ياكى خۇلاسە پىكىر يېزىڭ..." />
+          <button type="button" id="btnAddReminderNote" class="btn-primary">
+            <span>ئەسكەرتىشنى ساقلاش</span>
+            <span class="btn-primary-arrow" aria-hidden="true">←</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. يېڭى كىتاب قوشۇش كۆرۈنۈشى -->
+    <section id="viewAdd" class="view" aria-label="كىتاب قوشۇش">
+      <div class="card" style="display:flex;flex-direction:column;gap:14px;">
+        <div class="field-group">
+          <label for="inputBookTitle" class="field-label">كىتاب ياكى بىلىم ئىسمى</label>
+          <input id="inputBookTitle" type="text" class="input" placeholder="مەسىلەن: ئىسلام ئەخلاقى ئاساسلىرى" />
+        </div>
+
+        <div class="field-group">
+          <span class="field-label">JSON ھۆججىتى يۈكلەش</span>
+          <label for="inputJsonFile" class="file-drop-label">
+            <span id="fileDropText">كومپيۇتېردىن .json ھۆججەت تاللاش</span>
+          </label>
+          <input id="inputJsonFile" type="file" accept=".json,application/json" class="visually-hidden" />
+        </div>
+
+        <div class="field-group">
+          <label for="inputJsonText" class="field-label">ياكى JSON مەزمۇنىنى بىۋاسىتە چاپلاڭ</label>
+          <textarea id="inputJsonText" class="textarea" placeholder='{"bookTitle":"...","questions":[{"question":"...","answer":"..."}]}'></textarea>
+        </div>
+
+        <label class="reminder-toggle" style="justify-content:flex-start;">
+          <input type="checkbox" id="chkNewBookReminder" checked />
+          <span class="check-box" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          </span>
+          <span>بۇ كىتاب ئۈچۈن تور كۆرگۈچ ئېچىلغاندا ئەسكەرتمە چىقسۇن</span>
+        </label>
+
+        <div id="addErrorBox" class="msg-box msg-error" role="alert">
+          <span aria-hidden="true">⚠</span>
+          <span id="addErrorText"></span>
+        </div>
+
+        <button type="button" id="btnSaveBook" class="btn-primary">
+          <span>كىتابنى ساقلاش</span>
+          <span class="btn-primary-arrow" aria-hidden="true">←</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
